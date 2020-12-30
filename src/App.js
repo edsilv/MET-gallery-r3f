@@ -7,6 +7,7 @@ import { useGLTF } from '@react-three/drei/useGLTF'
 import { PerspectiveCamera } from '@react-three/drei/PerspectiveCamera'
 import { useAnimations } from '@react-three/drei/useAnimations'
 import { useTweaks } from 'use-tweaks'
+// import { a, useSpring } from '@react-spring/web'
 
 function FollowMouse() {
   return useFrame((state) => {
@@ -28,11 +29,9 @@ function Model(props) {
 
   // create animationRef
   useEffect(() => {
-    animationRef.current = {
-      Action: mixer.clipAction(animations[0], group.current)
-    }
-    animationRef.current.Action.play()
-    animationRef.current.Action.halt()
+    animationRef.current = mixer.clipAction(animations[0], group.current)
+    animationRef.current.play()
+    animationRef.current.halt()
     // cleanup
     return () => animations.forEach((clip) => mixer.uncacheClip(clip))
   }, [])
@@ -41,12 +40,21 @@ function Model(props) {
     time: { value: 0, min: 0, max: 1 }
   })
 
-  useLayoutEffect(() => {
+  // useLayoutEffect(() => {
+  //   if (animationRef.current) {
+  //     console.log(time)
+  //     animationRef.current.time = animationRef.current.getClip().duration * time.get()
+  //     mixer.update(0)
+  //   }
+  // }, [time, mixer])
+
+  useFrame((_state) => {
     if (animationRef.current) {
-      animationRef.current.Action.time = animationRef.current.Action.getClip().duration * time
-      mixer.update(0)
+      const t =  animationRef.current.time;
+      const duration = animationRef.current.getClip().duration;
+      animationRef.current.time = THREE.MathUtils.lerp(t, duration * time, 0.075)
     }
-  }, [time, mixer])
+  })
 
   return (
     <group ref={group} {...props} dispose={null}>

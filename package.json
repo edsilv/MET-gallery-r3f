@@ -5,6 +5,8 @@
   "keywords": [],
   "main": "src/index.js",
   "dependencies": {
+    "@react-spring/core": "9.0.0-rc.3",
+    "@react-spring/web": "9.0.0-rc.3",
     "@react-three/drei": "2.2.13",
     "drei": "2.2.13",
     "react": "17.0.1",

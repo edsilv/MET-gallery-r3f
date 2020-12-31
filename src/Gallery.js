@@ -1,5 +1,5 @@
 import * as THREE from 'three'
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import { useFrame, useThree } from 'react-three-fiber'
 // import { Environment } from '@react-three/drei/Environment'
 import { useGLTF } from '@react-three/drei/useGLTF'
@@ -47,6 +47,14 @@ export const Gallery = (props) => {
       animationRef.current.time = THREE.MathUtils.lerp(animationRef.current.time, duration * time, 0.075)
     }
   })
+
+  const [hovered, setHovered] = useState(null)
+  const [clicked, setClicked] = useState(null)
+
+  useEffect(() => {
+    console.log('hovered', hovered)
+    console.log('clicked', clicked)
+  }, [hovered, clicked])
 
   return (
     <group ref={group} {...props} dispose={null}>
@@ -157,12 +165,20 @@ export const Gallery = (props) => {
         geometry={nodes['eve-canvas-1'].geometry}
         position={[9.2, 0.95, -3.86]}
         scale={[0.2, 0.22, 0.35]}
+        onPointerOver={(e) => (e.stopPropagation(), setHovered(e.object.material.name))}
+        onPointerOut={(e) => e.intersections.length === 0 && setHovered(null)}
+        onPointerMissed={() => (setClicked(null))}
+        onPointerDown={(e) => (e.stopPropagation(), (setClicked(e.object.material.name)))}
       />
       <mesh
         material={materials['eve-painting-2']}
         geometry={nodes['eve-canvas-2'].geometry}
         position={[9.2, 0.95, 0.99]}
         scale={[0.2, 0.22, 0.35]}
+        onPointerOver={(e) => (e.stopPropagation(), setHovered(e.object.material.name))}
+        onPointerOut={(e) => e.intersections.length === 0 && setHovered(null)}
+        onPointerMissed={() => (setClicked(null))}
+        onPointerDown={(e) => (e.stopPropagation(), (setClicked(e.object.material.name)))}
       />
       <mesh
         material={materials.statuete}

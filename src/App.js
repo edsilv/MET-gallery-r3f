@@ -13,10 +13,13 @@ function FollowMouse() {
 
 export default function App() {
   return (
-    <Canvas>
+    <Canvas
+      colorManagement
+      shadowMap>
       <ambientLight intensity={0.5} />
       {/* <spotLight intensity={0.3} angle={0.1} penumbra={1} position={[5, 25, 20]} /> */}
       <Suspense fallback={null}>
+        {/* <MusicBox /> */}
         <Gallery />
         <Environment files="royal_esplanade_1k.hdr" />
       </Suspense>

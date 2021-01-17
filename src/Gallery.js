@@ -6,9 +6,9 @@ import { useGLTF } from '@react-three/drei/useGLTF'
 // import { OrbitControls } from '@react-three/drei/OrbitControls'
 import { PerspectiveCamera } from '@react-three/drei/PerspectiveCamera'
 import { useAnimations } from '@react-three/drei/useAnimations'
-import { useTweaks } from 'use-tweaks'
+// import { useTweaks } from 'use-tweaks'
 
-export const Gallery = (props) => {
+export const Gallery = ({ scroll }) => {
   const group = useRef()
   const animationRef = useRef()
   const cameraRef = useRef()
@@ -16,9 +16,9 @@ export const Gallery = (props) => {
   const { mixer } = useAnimations(animations, group)
   const { setDefaultCamera } = useThree()
 
-  const { time } = useTweaks({
-    time: { value: 0, min: 0, max: 1 }
-  })
+  // const { time } = useTweaks({
+  //   time: { value: 0, min: 0, max: 1 }
+  // })
 
   // set default camera
   useEffect(() => void setDefaultCamera(cameraRef.current), [])
@@ -44,7 +44,8 @@ export const Gallery = (props) => {
   useFrame((_state) => {
     if (animationRef.current) {
       const duration = animationRef.current.getClip().duration;
-      animationRef.current.time = THREE.MathUtils.lerp(animationRef.current.time, duration * time, 0.075)
+      // animationRef.current.time = THREE.MathUtils.lerp(animationRef.current.time, duration * time, 0.075)
+      animationRef.current.time = THREE.MathUtils.lerp(animationRef.current.time, duration * scroll, 0.075)
     }
   })
 
@@ -57,7 +58,7 @@ export const Gallery = (props) => {
   }, [hovered, clicked])
 
   return (
-    <group ref={group} {...props} dispose={null}>
+    <group ref={group} dispose={null}>
       <group name="Camera001" position={[-1.85, 1.88, 3.41]} rotation={[Math.PI / 2, 0, 1.6]}>
         <PerspectiveCamera ref={cameraRef} makeDefault={false} far={1000} near={0.1} fov={22.1} rotation={[-Math.PI / 2, 0, 0]} />
       </group>

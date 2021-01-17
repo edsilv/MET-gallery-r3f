@@ -1,8 +1,11 @@
 import * as THREE from 'three'
-import React, { Suspense } from 'react'
+import React, { Suspense, useRef, useState } from 'react'
 import { Canvas, useFrame } from 'react-three-fiber'
 import { Environment } from '@react-three/drei/Environment'
 import { Gallery } from './Gallery'
+import {useScroll} from 'react-use'
+import { useEffect } from 'react/cjs/react.development'
+// import InView from 'react-intersection-observer'
 
 function FollowMouse() {
   return useFrame((state) => {
@@ -12,7 +15,23 @@ function FollowMouse() {
 }
 
 export default function App() {
+
+  const scrollRef = useRef(null);
+  const {x, y} = useScroll(scrollRef);
+
+  const [ scroll, setScroll ] = useState(0);
+
+  const normalise = (val, min, max) => {
+    return (val - min) / (max - min);
+  };
+
+  useEffect(() => {
+    const s = normalise(y, 0, 2000 - window.innerHeight)
+    setScroll(s)
+  }, [y])
+
   return (
+    <>
     <Canvas
       colorManagement
       shadowMap>
@@ -20,11 +39,15 @@ export default function App() {
       {/* <spotLight intensity={0.3} angle={0.1} penumbra={1} position={[5, 25, 20]} /> */}
       <Suspense fallback={null}>
         {/* <MusicBox /> */}
-        <Gallery />
+        <Gallery scroll={scroll} />
         <Environment files="royal_esplanade_1k.hdr" />
       </Suspense>
       {/* <OrbitControls enablePan={true} /> */}
       <FollowMouse />
     </Canvas>
+    <div ref={scrollRef} id="scroll">
+      <div id="scroll-content"></div>
+    </div>
+    </>
   )
 }

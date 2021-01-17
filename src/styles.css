@@ -14,3 +14,18 @@ body,
 body {
   background: white;
 }
+
+#scroll {
+  position: absolute;
+  /* pointer-events: all; */
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  overflow-y: scroll;
+}
+
+#scroll-content {
+  height: 2000px;
+  /* pointer-events: none; */
+}

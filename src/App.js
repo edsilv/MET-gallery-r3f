@@ -1,10 +1,9 @@
 import * as THREE from 'three'
-import React, { Suspense, useRef, useState } from 'react'
+import React, { Suspense, useRef, useEffect, useState } from 'react'
 import { Canvas, useFrame } from 'react-three-fiber'
 import { Environment } from '@react-three/drei/Environment'
 import { Gallery } from './Gallery'
 import {useScroll} from 'react-use'
-import { useEffect } from 'react/cjs/react.development'
 // import InView from 'react-intersection-observer'
 
 function FollowMouse() {
@@ -21,12 +20,12 @@ export default function App() {
 
   const [ scroll, setScroll ] = useState(0);
 
-  const normalise = (val, min, max) => {
+  const normalize = (val, min, max) => {
     return (val - min) / (max - min);
   };
 
   useEffect(() => {
-    const s = normalise(y, 0, 2000 - window.innerHeight)
+    const s = normalize(y, 0, 2000 - window.innerHeight)
     setScroll(s)
   }, [y])
 

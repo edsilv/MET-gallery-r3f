@@ -8,7 +8,7 @@ gltf-pipeline -i model.glb -o modelDraco.glb -d
 
 https://github.com/pmndrs/gltfjsx#usage
 
-npx gltfjsx [path/to/model.gltf] [options]
+npx gltfjsx [path/to/model.glb] [options]
 
 ## controlling camera position
 

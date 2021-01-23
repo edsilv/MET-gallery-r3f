@@ -4,6 +4,7 @@ import { Canvas, useFrame } from 'react-three-fiber'
 import { Environment } from '@react-three/drei/Environment'
 import { Gallery } from './Gallery'
 import {useScroll} from 'react-use'
+import { Html } from "@react-three/drei"
 // import InView from 'react-intersection-observer'
 
 function FollowMouse() {
@@ -36,7 +37,11 @@ export default function App() {
       shadowMap>
       <ambientLight intensity={0.5} />
       {/* <spotLight intensity={0.3} angle={0.1} penumbra={1} position={[5, 25, 20]} /> */}
-      <Suspense fallback={null}>
+      <Suspense fallback={
+        <Html center>
+          <span className="loading">loading...</span>
+        </Html>
+      }>
         {/* <MusicBox /> */}
         <Gallery scroll={scroll} />
         <Environment files="royal_esplanade_1k.hdr" />

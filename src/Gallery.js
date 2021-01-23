@@ -26,7 +26,6 @@ export const Gallery = ({ scroll }) => {
   // create animationRef
   useEffect(() => {
     animationRef.current = mixer.clipAction(animations[0], group.current)
-    console.log(animationRef.current)
     animationRef.current.play()
     animationRef.current.halt()
     // cleanup
@@ -45,10 +44,9 @@ export const Gallery = ({ scroll }) => {
   useFrame((_state) => {
     if (animationRef.current) {
       const duration = animationRef.current.getClip().duration;
-      console.log(THREE.MathUtils.lerp(animationRef.current.time, duration * scroll, 0.075))
       // console.log("duration", duration);
       // animationRef.current.time = THREE.MathUtils.lerp(animationRef.current.time, duration * time, 0.075)
-      animationRef.current.time = THREE.MathUtils.lerp(animationRef.current.time, duration * scroll, 0.075)
+      animationRef.current.time = THREE.MathUtils.lerp(animationRef.current.time, duration * scroll, 0.1)
     }
   })
 
@@ -856,3 +854,5 @@ export const Gallery = ({ scroll }) => {
     </group>
   )
 }
+
+useGLTF.preload('/met-gallery.glb')

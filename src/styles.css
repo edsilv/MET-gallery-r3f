@@ -15,9 +15,13 @@ body {
   background: white;
 }
 
+canvas {
+  position: fixed;
+}
+
 #scroll {
+  /* pointer-events: none; */
   position: absolute;
-  /* pointer-events: all; */
   top: 0;
   left: 0;
   height: 100%;
@@ -27,5 +31,10 @@ body {
 
 #scroll-content {
   height: 2000px;
+  width: 100px;
+  background: red;
+  position: absolute;
+  top: 0;
+  left: 0;
   /* pointer-events: none; */
 }

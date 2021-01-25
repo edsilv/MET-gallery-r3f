@@ -18,7 +18,7 @@ export default function App() {
   const [absScrollY, setAbsScrollY] = useState(0)
   const [scroll, setScroll] = useState(0)
 
-  const maxScrollY = 2000;
+  const maxScrollY = 10000;
 
   const normalize = (val, min, max) => {
     return (val - min) / (max - min)
@@ -32,7 +32,14 @@ export default function App() {
     let y = clamp(absScrollY + e.deltaY, 0, maxScrollY)
     y = normalize(y, 0, maxScrollY)
     setScroll(y)
+    // let t = absScrollY + e.deltaY
+    // if (t < 0) {
+    //   t = maxScrollY - t
+    // } else if (t > maxScrollY) {
+    //   t = t - maxScrollY
+    // }
     setAbsScrollY(clamp(absScrollY + e.deltaY, 0, maxScrollY))
+    //setAbsScrollY(t)
   }
 
   return (
